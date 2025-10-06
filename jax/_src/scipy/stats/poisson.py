@@ -143,10 +143,9 @@ def entropy(mu, loc=0) -> Array:
   """
   
   mu, loc = promote_args_inexact("poisson.entropy", mu, loc)
-  lb, ub = 0, jnp.inf
+  lb, ub = 0, np.inf
   median = mu + 1/3 - 0.02/mu # SciPy uses the probability point function to compute the 0.5 quantile. This value is instead an approximation from wikipedia https://en.m.wikipedia.org/wiki/Poisson_distribution
-  return _expect(lambda x: entr(pmf(x, mu, loc)),
-                           lb, ub, median, 1)
+  return _expect(lambda x: entr(pmf(x, mu, loc)), lb, ub, median, 1)
 
 
 def _sum_over_range(fun, start, stop, inc, chunksize, tolerance, maxcount):
@@ -207,3 +206,4 @@ def _expect(fun, lb, ub, x0, inc, maxcount=1000, tolerance=1e-10, chunksize=32):
 # Generic Entropy Function: https://github.com/scipy/scipy/blob/d46b9b31d3fb71b1e5fcd9bf9fa1e3a0b235c951/scipy/stats/_distn_infrastructure.py#L1261-L1296
 # Entropy Function For Discrete Random Variable: https://github.com/scipy/scipy/blob/d46b9b31d3fb71b1e5fcd9bf9fa1e3a0b235c951/scipy/stats/_distn_infrastructure.py#L3846-L3852
 # Expect Function For Summation Of Infinite Support: https://github.com/scipy/scipy/blob/d46b9b31d3fb71b1e5fcd9bf9fa1e3a0b235c951/scipy/stats/_distn_infrastructure.py#L3954-L3994
+# Scipy has a generic entropy function https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.entropy.html
