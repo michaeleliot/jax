@@ -180,7 +180,6 @@ class LaxBackedScipyStatsTests(jtu.JaxTestCase):
 
     def args_maker():
       mu, loc = map(rng, shapes, dtypes)
-      # clipping to ensure that rate parameter is strictly positive
       mu = np.clip(np.abs(mu), a_min=0.1, a_max=None).astype(mu.dtype)
       return [mu, loc]
 
